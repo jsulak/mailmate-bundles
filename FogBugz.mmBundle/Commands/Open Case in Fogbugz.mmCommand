@@ -1,0 +1,8 @@
+{
+	name          = 'Open Case in FogBugz';
+	input         = 'canonical';
+	environment   = 'MM_SUBJECT=${subject.prefix:+${subject.prefix} }${subject.blob:+[${subject.blob}] }${subject.body}\n';
+	command       = '#!/bin/bash\n"${MM_BUNDLE_SUPPORT}/bin/open_bug"';
+	keyEquivalent = "F";
+	uuid          = '36813956-14D2-11E4-B3EF-B1D0E18D2956';
+}

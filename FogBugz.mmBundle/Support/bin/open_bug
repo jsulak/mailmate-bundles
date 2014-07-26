@@ -1,0 +1,7 @@
+#!/usr/bin/tclsh
+
+set subject $::env(MM_SUBJECT)
+set pattern {Case\s([0-9]+)}
+regexp  -nocase $pattern $subject _ bugzid
+
+exec open "https://flightaware.fogbugz.com/f/cases/$bugzid/"
