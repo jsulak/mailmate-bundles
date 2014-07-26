@@ -1,7 +1,7 @@
 mailmate-bundles
 ================
 
-Bundles for the MailMate OS X email client
+Bundles for the [MailMate](http://freron.com/) OS X email client
 
 ## Open Case in Fogbugz
 
