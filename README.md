@@ -7,5 +7,5 @@ Bundles for the MailMate OS X email client
 
 Adds a command to quickly open a FogBugz case referenced from a FogBugz status email.  
 
-Can be activated from the `Commands` menu, or with the "F" keyboard shortcut.
+Can be activated from the `Commands` menu, or with the "F2" keyboard shortcut.
 
