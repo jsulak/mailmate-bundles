@@ -1,8 +1,20 @@
 #!/usr/bin/tclsh
 
 set cannonical [read stdin]
-set pattern {URL:\s+([^\s]+fogbugz[^\s]+)}
 
-regexp -nocase $pattern $cannonical _ url
+# Try 1: FogBugz
+set fogBugzPattern {URL:\s+([^\s]+fogbugz[^\s]+)}
+regexp -nocase $fogBugzPattern $cannonical _ url
 
-exec open $url
+if {[info exists url]} {
+	exec open $url
+	return
+}
+
+# Try 2: Github pull request
+set githubPattern {https://github[^\s]+/pull/[^\s]+}
+regexp -nocase $githubPattern $cannonical url
+
+if {[info exists url]} {
+	exec open $url
+}
