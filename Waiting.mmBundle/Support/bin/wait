@@ -11,31 +11,14 @@ proc clean_subject {subject} {
 	# Get rid of @ and ::, since it messes up Omnifocus parsing
 	set subject [string map -nocase {@ at :: {}} $subject]
 
-	# Standardize FogBugz bug reference (from FogBugz emails)
-	set subject [regsub {FogBugz \(Case ([0-9]+)\)} $subject {FB\1}]
-
 	return $subject
 }
 
-
-# If this is a Fogbugz email, get the sender from the message body
-proc get_sender_from_fogbugz {body} {
-	set patterns {
-		{A FogBugz case was edited by (.+)\.$}
-		{A FogBugz case was closed by (.+)\.$}
-		{A new case was assigned to you in FogBugz by (.+)\.$}
-	}
-
-	foreach pattern $patterns {
-		regexp -line -nocase $pattern $body _ name
-		if {[info exists name]} {
-			return $name
-		}
-	}
-
-	return ""
+proc clean_sender {senderName} {
+	# Remove JIRA prefix from sender name
+	set senderName [regsub { \(JIRA\)} $senderName ""]
+	return $senderName
 }
-
 
 set senderName $env(MM_SENDER_NAME)
 
@@ -44,12 +27,7 @@ if {$senderName eq "James Sulak"} {
 	set senderName $env(MM_TO_NAME)
 }
 
-# Potentially grab sender from body, if this is a Fogbugz message
-if {$senderName eq "FlightAware"} {
-	set body [read stdin]
-	set senderName [get_sender_from_fogbugz $body]
-}
-
+set senderName [clean_sender $senderName]
 set subject [clean_subject $env(MM_SUBJECT)]
 set messageLink "Email: message://%3c[http::formatQuery $env(MM_MESSAGE_ID)]%3e"
 set task "Waiting on $senderName re $subject @waiting ::Tasks // $messageLink"
