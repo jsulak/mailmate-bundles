@@ -1,0 +1,15 @@
+#!/usr/bin/env osascript -l JavaScript
+
+function run(argv) {
+	var text = argv[0];
+	var app = Application("Omnifocus");
+	var doc = app.defaultDocument;
+	var result = app.parseTasksInto(doc, {withTransportText: text});
+
+	if (result.length == 1) {
+		// Note that only the current application can send notifications
+		var currentApp = Application.currentApplication();
+		currentApp.includeStandardAdditions = true;
+		currentApp.displayNotification('Omnifocus task created', {withTitle: 'MailMate'});
+	}
+}

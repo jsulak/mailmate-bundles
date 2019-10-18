@@ -1,0 +1,6 @@
+{	"contactEmailRot13" = "jsulak@gmail.com";
+	contactName = "James Sulak";
+	description = "Wait for reply in OmniFocus";
+	name = "Waiting";
+	uuid = "1d3be3f0-1847-11e5-b60b-1697f925ec7b";
+}
