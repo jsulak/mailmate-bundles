@@ -1,7 +1,7 @@
 {
 	name          = 'Wait for reply';
 	input         = 'canonical';
-	environment   = 'MM_SUBJECT=${subject.prefix:+${subject.prefix} }${subject.blob:+[${subject.blob}] }${subject.body}\nMM_MESSAGE_ID=${message-id.split}\nMM_SENDER_NAME=${from.name}\nMM_SENDER=${from.address}\nMM_TO_NAME=${to.name}\n';
+	environment   = 'MM_SUBJECT=${subject.prefix:+${subject.prefix} }${subject.blob:+[${subject.blob}] }${subject.body}\nMM_MESSAGE_ID=${message-id.split}\nMM_SENDER_NAME=${from.name}\nMM_SENDER=${from.address}\nMM_TO_NAME=${to.name}\nMM_WAITING_PERIOD=3 days\n';
 	command       = '#!/bin/bash\n"${MM_BUNDLE_SUPPORT}/bin/wait"';
 	keyEquivalent = "\UF706";
 	uuid          = '7b14f458-1847-11e5-b60b-1697f925ec7b';
