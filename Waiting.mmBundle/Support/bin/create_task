@@ -3,7 +3,18 @@
 function run(argv) {
 	var text = argv[0];
 	var app = Application("Omnifocus");
+	
 	var doc = app.defaultDocument;
+
+	// Get notification period from user
+	var notifyPeriod = getNotifyPeriod();
+
+	// prefix with # for transport text correctness
+	notifyPeriod = "# " + notifyPeriod;
+	
+	// Replace placeholder text
+	text = text.replace("NOTIFY_PERIOD", notifyPeriod);
+
 	var result = app.parseTasksInto(doc, {withTransportText: text});
 
 	if (result.length == 1) {
@@ -13,3 +24,47 @@ function run(argv) {
 		currentApp.displayNotification('Omnifocus task created', {withTitle: 'MailMate'});
 	}
 }
+
+
+// Read and return notify time from disk, if available
+// This is a hack so that other launchers (like Alfred) can pass
+// a paremeter to the MailMate command.  Directly displaying
+// an applescript dialog does not work in MailMate, at least well
+// since the dialog does not have focus when it appears.
+function getNotifyPeriod() {
+	var app = Application.currentApplication();
+	app.includeStandardAdditions = true; 
+
+	var notifytime = "";
+
+	try {
+		var test = Path("/tmp/notifytime");
+		notifytime = app.read(test).trim();
+		app.doShellScript("rm /tmp/notifytime");
+	} catch(e) {
+		
+	}
+
+	return notifytime;
+}
+
+
+// Create popup to ask the user when to set the Omnifocus reminder for
+// function chooseNotifyPeriod() {
+// 	// var app = Application.currentApplication();
+// 	var app = Application("MailMate");
+// 	app.includeStandardAdditions = true;
+// 	// app.activate();
+
+// 	//.displayDialog(app);
+	
+// 	// Application("MailMate").activate();
+	
+// 	var notifyPeriods = ["none", "1 day", "3 days", "1 week"];
+// 	var notifyPeriod = app.chooseFromList(notifyPeriods, {
+// 		withPrompt: "Remind me in:",
+// 		defaultItems: ["none"]
+// 	});
+	
+// 	return notifyPeriod[0];
+// }

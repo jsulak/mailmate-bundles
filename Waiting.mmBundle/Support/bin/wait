@@ -32,12 +32,7 @@ set subject [clean_subject $env(MM_SUBJECT)]
 set messageLink "Email: message://%3c[http::formatQuery $env(MM_MESSAGE_ID)]%3e"
 
 
-# Grab waiting period from enivronment, if available
-set waitingPeriod ""
-if {[info exists env(MM_WAITING_PERIOD)]} {
-	set waitingPeriod "# $env(MM_WAITING_PERIOD)"
-}
-
-set task "Waiting on $senderName re $subject @waiting ::Tasks $waitingPeriod // $messageLink"
+# NOTIFY_PERIOD is a placeholder text, applescript will replace
+set task "Waiting on $senderName re $subject @waiting ::Tasks NOTIFY_PERIOD // $messageLink"
 
 exec "$env(MM_BUNDLE_SUPPORT)/bin/create_task" $task
